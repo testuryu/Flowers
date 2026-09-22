@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Para Yesenia Maria Mairena Herrera</title>
+  <title>Día de las Flores Amarillas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -997,6 +997,319 @@
       font-size: 20px;
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
     }
+
+    /* ====== EASTER EGGS STYLES ====== */
+    /* Toast Notificación Easter Egg */
+    .esquimal-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(40px);
+      background: rgba(18, 16, 12, 0.94);
+      border: 1.5px solid #ffd700;
+      color: #fff9d6;
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 215, 0, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1500;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+      white-space: nowrap;
+    }
+
+    .esquimal-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Partículas Emojis Besitos de Esquimal */
+    .esquimal-emoji {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1600;
+      font-size: 24px;
+      user-select: none;
+      animation: floatEsquimal 1.5s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+    }
+
+    @keyframes floatEsquimal {
+      0% {
+        transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
+        opacity: 1;
+      }
+
+      40% {
+        opacity: 0.95;
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) - 25px)) scale(1.25) rotate(var(--rot));
+      }
+
+      100% {
+        transform: translate(calc(-50% + var(--dx) * 1.3), calc(-50% + var(--dy) - 95px)) scale(0.7) rotate(calc(var(--rot) * 1.6));
+        opacity: 0;
+      }
+    }
+
+    /* Onda expansiva sutil en espacio vacío */
+    .space-ripple {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 215, 0, 0.85);
+      background: radial-gradient(circle, rgba(255, 235, 130, 0.45) 0%, rgba(255, 215, 0, 0) 70%);
+      box-shadow: 0 0 14px rgba(255, 215, 0, 0.65);
+      pointer-events: none;
+      z-index: 40;
+      transform: translate(-50%, -50%);
+      animation: rippleExpand 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    }
+
+    @keyframes rippleExpand {
+      0% {
+        width: 6px;
+        height: 6px;
+        opacity: 1;
+        border-width: 2px;
+      }
+
+      100% {
+        width: 65px;
+        height: 65px;
+        opacity: 0;
+        border-width: 1px;
+      }
+    }
+
+    /* Chispitas doradas al tocar el fondo */
+    .space-sparkle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ffd700, 0 0 14px #ffd700;
+      pointer-events: none;
+      z-index: 40;
+      transform: translate(-50%, -50%);
+      animation: sparkleFall 0.65s cubic-bezier(0.2, 0.6, 0.3, 1) forwards;
+    }
+
+    @keyframes sparkleFall {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2);
+        opacity: 0;
+      }
+    }
+
+    /* 1. Easter Egg: Giro 3D y mensaje secreto en el título */
+    .pill.flip-secret {
+      animation: pillSecretFlip 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background: linear-gradient(135deg, #fff275 0%, #ffd700 50%, #ff9e00 100%);
+      box-shadow: 0 0 50px rgba(255, 215, 0, 0.95), 0 0 85px rgba(255, 235, 120, 0.7);
+      border-color: #ffffff;
+      color: #1a1000;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+      cursor: pointer;
+    }
+
+    @keyframes pillSecretFlip {
+      0% {
+        transform: translateX(-50%) translateY(0) rotateX(0deg) scale(1);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(-12px) rotateX(180deg) scale(1.1);
+      }
+
+      100% {
+        transform: translateX(-50%) translateY(0) rotateX(360deg) scale(1);
+      }
+    }
+
+    /* 2. Easter Egg: Constelación de Corazón al unir recuerdos */
+    .constellation-overlay {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(380px, 85vw);
+      height: min(380px, 85vw);
+      pointer-events: none;
+      z-index: 8;
+      opacity: 0;
+      animation: constellationGlow 4.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.85)) drop-shadow(0 0 40px rgba(255, 235, 120, 0.5));
+    }
+
+    .constellation-line {
+      stroke: #ffd700;
+      stroke-width: 1.8;
+      stroke-dasharray: 4 2;
+      stroke-linecap: round;
+      animation: linePulse 2s ease-in-out infinite alternate;
+    }
+
+    .constellation-star {
+      fill: #ffffff;
+      stroke: #ffd700;
+      stroke-width: 1.5;
+      animation: starTwinkleConst 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes linePulse {
+      0% {
+        opacity: 0.6;
+        stroke-width: 1.5;
+      }
+
+      100% {
+        opacity: 1;
+        stroke-width: 2.2;
+        stroke: #fff6a6;
+      }
+    }
+
+    @keyframes starTwinkleConst {
+      0% {
+        transform: scale(0.85);
+        fill: #fff3a8;
+      }
+
+      100% {
+        transform: scale(1.3);
+        fill: #ffffff;
+      }
+    }
+
+    @keyframes constellationGlow {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7);
+      }
+
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.03);
+      }
+
+      35% {
+        transform: translate(-50%, -50%) scale(0.98);
+      }
+
+      75% {
+        opacity: 0.95;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+    }
+
+    /* 3. Easter Egg: Flor que cae en tus manos */
+    .flower-hands-badge {
+      position: fixed;
+      bottom: 45px;
+      left: 50%;
+      transform: translateX(-50%) translateY(40px) scale(0.85);
+      background: linear-gradient(135deg, rgba(24, 21, 15, 0.95) 0%, rgba(12, 11, 8, 0.98) 100%);
+      border: 1.5px solid #ffd700;
+      border-radius: 999px;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 1700;
+      opacity: 0;
+      pointer-events: none;
+      animation: flowerHandsFloat 3.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .flower-hands-icon {
+      font-size: 28px;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+      animation: pulseSunflower 1.5s ease-in-out infinite alternate;
+    }
+
+    .flower-hands-text {
+      color: #fff9d6;
+      font-family: 'Outfit', sans-serif;
+      font-size: 15.5px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    }
+
+    @keyframes flowerHandsFloat {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(40px) scale(0.8);
+      }
+
+      15% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+      }
+
+      80% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-8px) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-25px) scale(0.9);
+      }
+    }
+
+    @keyframes pulseSunflower {
+      0% {
+        transform: scale(0.95) rotate(-6deg);
+      }
+
+      100% {
+        transform: scale(1.1) rotate(6deg);
+      }
+    }
+
+    /* Pétalos cayendo en cascada */
+    .cascade-petal {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1650;
+      font-size: 22px;
+      animation: cascadeFall var(--fall-duration) linear forwards;
+    }
+
+    @keyframes cascadeFall {
+      0% {
+        top: -40px;
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        top: 105vh;
+        transform: translateX(var(--drift)) rotate(var(--rot));
+        opacity: 0.2;
+      }
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -1122,6 +1435,9 @@
     </div>
   </div>
 
+  <!-- Toast Notificación para Easter Egg -->
+  <div id="esquimal-toast" class="esquimal-toast">¡Besito de esquimal activado! ❄️💛</div>
+
   <!-- Núcleo de Luz para Suspenso Cinematográfico -->
   <div id="suspense-core" class="suspense-core">
     <div class="suspense-dot"></div>
@@ -1130,7 +1446,7 @@
   <div id="climax-flash" class="climax-flash"></div>
 
   <canvas id="galaxy-canvas"></canvas>
-  <div class="pill">Feliz Día de las Flores Amarillas, mi amor 🌻</div>
+  <div id="galaxy-pill" class="pill">Feliz Día de las Flores Amarillas, mi amor 🌻</div>
   <div id="err" class="error"></div>
   <canvas id="fx"></canvas>
 
@@ -1519,7 +1835,9 @@
 
         const core = new THREE.Mesh(new THREE.SphereGeometry(coreR, 64, 64), coreMat);
         core.renderOrder = 2;
+        core.userData = { type: 'sun' };
         galaxy.add(core);
+        interactiveSprites.push(core);
 
         const sunLight = new THREE.PointLight(0xFFD700, 2.2, 400, 1.2);
         sunLight.position.set(0, 0, 0);
@@ -2033,12 +2351,40 @@
 
         const modalPhotos = ['assets/foto3.jpg', 'assets/foto2.jpg'];
         let photoIndex = 0;
+        const viewedPhotos = new Set();
+        let constellationShown = false;
 
         function getPhotoForPhrase(phrase) {
           // Alternar equitativamente (50% de probabilidad) entre ambas fotos para cualquier frase
           const photo = modalPhotos[photoIndex % modalPhotos.length];
           photoIndex++;
           return photo;
+        }
+
+        // Easter Egg: Constelación de corazón al unir ambos recuerdos (foto2 y foto3)
+        function triggerConstellationHeart() {
+          if (constellationShown) return;
+          constellationShown = true;
+
+          const svgHeart = document.createElement('div');
+          svgHeart.className = 'constellation-overlay';
+          svgHeart.innerHTML = `
+            <svg viewBox="0 0 474 431" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="heartGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fff07a" />
+                  <stop offset="50%" stop-color="#ffd700" />
+                  <stop offset="100%" stop-color="#ffa000" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(0,431) scale(0.1,-0.1)" fill="url(#heartGoldGrad)" stroke="none">
+                <path d="M1209 4099 c-469 -69 -862 -417 -975 -864 -21 -83 -30 -357 -15 -470 24 -182 101 -397 206 -573 151 -255 349 -454 1059 -1067 315 -272 634 -609 801 -845 42 -60 62 -80 82 -80 18 0 50 36 178 200 118 151 292 334 480 505 60 55 119 108 130 119 11 10 144 125 295 255 857 736 1103 1127 1076 1711 -3 74 -12 167 -20 206 -86 427 -396 755 -818 864 -260 67 -500 56 -728 -32 -187 -72 -393 -231 -522 -402 -33 -45 -64 -82 -68 -84 -5 -2 -25 22 -47 52 -53 77 -234 252 -318 308 -238 159 -543 234 -796 197z m317 -94 c298 -52 585 -241 742 -490 55 -87 86 -125 102 -125 15 0 34 25 100 127 155 242 428 431 700 484 98 19 328 17 430 -5 338 -72 607 -280 751 -579 125 -262 130 -640 13 -954 -113 -302 -368 -598 -934 -1088 -63 -54 -124 -107 -135 -116 -485 -420 -649 -582 -842 -834 -37 -49 -73 -90 -80 -92 -6 -2 -33 24 -59 59 -199 262 -478 540 -984 978 -566 490 -748 687 -883 956 -226 451 -205 948 54 1269 263 324 643 476 1025 410z"/>
+              </g>
+            </svg>
+          `;
+
+          document.body.appendChild(svgHeart);
+          setTimeout(() => svgHeart.remove(), 4300);
         }
 
         function showModal(text, imageSrc = null) {
@@ -2049,6 +2395,14 @@
             modalImage.src = resolvedSrc;
             modalImage.style.display = 'block';
             if (modalIcon) modalIcon.style.display = 'none';
+
+            // Registro de fotos visualizadas para el Modo Constelación
+            if (resolvedSrc.includes('foto3') || resolvedSrc.includes('foto2')) {
+              viewedPhotos.add(resolvedSrc.includes('foto3') ? 'foto3' : 'foto2');
+              if (viewedPhotos.has('foto3') && viewedPhotos.has('foto2')) {
+                setTimeout(triggerConstellationHeart, 600);
+              }
+            }
           } else {
             modalImage.src = '';
             modalImage.style.display = 'none';
@@ -2073,7 +2427,174 @@
           if (e.key === 'Escape') closeModal();
         });
 
-        // 3D Raycasting para interacción con frases y flores en la galaxia
+        // ====== EASTER EGGS LOGIC ======
+        // 1. Easter Egg: Mensaje Secreto en el Título (3 clics rápidos)
+        const galaxyPill = document.getElementById('galaxy-pill');
+        let pillClicks = [];
+        let pillTimeout = null;
+        const defaultPillText = 'Feliz Día de las Flores Amarillas, mi amor 🌻';
+
+        if (galaxyPill) {
+          galaxyPill.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const now = performance.now();
+            pillClicks.push(now);
+            pillClicks = pillClicks.filter(t => now - t <= 1500);
+
+            if (pillClicks.length >= 3) {
+              pillClicks = [];
+              galaxyPill.classList.remove('flip-secret');
+              void galaxyPill.offsetWidth; // Reflow para reiniciar la animación
+              galaxyPill.classList.add('flip-secret');
+              galaxyPill.textContent = 'no me hinques la nariz o te hago cosquillas👻';
+
+              clearTimeout(pillTimeout);
+              pillTimeout = setTimeout(() => {
+                galaxyPill.classList.remove('flip-secret');
+                galaxyPill.textContent = defaultPillText;
+              }, 4000);
+            }
+          });
+        }
+
+        // 2. Easter Egg: Besitos de Esquimal en el Sol Central (5 clics rápidos)
+        let sunClicks = [];
+        let toastTimeout = null;
+
+        function triggerEsquimalExplosion() {
+          const cx = window.innerWidth / 2;
+          const cy = window.innerHeight / 2;
+          const emojis = ['❄️', '💛', '🌻', '❄️', '💛'];
+
+          for (let i = 0; i < 18; i++) {
+            const el = document.createElement('div');
+            el.className = 'esquimal-emoji';
+            el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            const angle = Math.random() * Math.PI * 2;
+            const dist = Math.random() * 90 + 30;
+            const dx = Math.cos(angle) * dist;
+            const dy = Math.sin(angle) * dist;
+            const rot = (Math.random() - 0.5) * 60 + 'deg';
+
+            el.style.setProperty('--dx', dx + 'px');
+            el.style.setProperty('--dy', dy + 'px');
+            el.style.setProperty('--rot', rot);
+            el.style.left = (cx + (Math.random() - 0.5) * 40) + 'px';
+            el.style.top = (cy + (Math.random() - 0.5) * 40) + 'px';
+
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1600);
+          }
+
+          const toast = document.getElementById('esquimal-toast');
+          if (toast) {
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
+          }
+        }
+
+        // 3. Easter Egg: Flor que cae en tus manos (Doble toque 2 dedos / Doble Espacio / Clic derecho)
+        let flowerHandsActive = false;
+
+        function triggerFlowerInHands() {
+          if (flowerHandsActive) return;
+          flowerHandsActive = true;
+          setTimeout(() => { flowerHandsActive = false; }, 3600);
+
+          // Lluvia suave de pétalos desde arriba
+          const petals = ['🌻', '✨', '💛', '🌼', '🌻'];
+          for (let i = 0; i < 26; i++) {
+            setTimeout(() => {
+              const p = document.createElement('div');
+              p.className = 'cascade-petal';
+              p.textContent = petals[Math.floor(Math.random() * petals.length)];
+              p.style.left = (Math.random() * 94 + 3) + 'vw';
+              const fallDur = (Math.random() * 2 + 2.4).toFixed(2) + 's';
+              const drift = ((Math.random() - 0.5) * 120) + 'px';
+              const rot = ((Math.random() - 0.5) * 360) + 'deg';
+              p.style.setProperty('--fall-duration', fallDur);
+              p.style.setProperty('--drift', drift);
+              p.style.setProperty('--rot', rot);
+              document.body.appendChild(p);
+              setTimeout(() => p.remove(), 4800);
+            }, i * 75);
+          }
+
+          // Insignia flotante con flor estilizada en la parte inferior
+          const badge = document.createElement('div');
+          badge.className = 'flower-hands-badge';
+          badge.innerHTML = `
+            <span class="flower-hands-icon">🌻</span>
+            <span class="flower-hands-text">Para que nunca te falte una 🌻</span>
+          `;
+          document.body.appendChild(badge);
+          setTimeout(() => badge.remove(), 3600);
+        }
+
+        // Detección 2 dedos doble tap en móvil
+        let lastTwoFingerTap = 0;
+        window.addEventListener('touchstart', (e) => {
+          if (!galaxyStarted) return;
+          if (e.touches && e.touches.length === 2) {
+            const now = performance.now();
+            if (now - lastTwoFingerTap < 400) {
+              e.preventDefault();
+              triggerFlowerInHands();
+              lastTwoFingerTap = 0;
+            } else {
+              lastTwoFingerTap = now;
+            }
+          }
+        }, { passive: false });
+
+        // Detección doble barra espaciadora en PC
+        let lastSpacePress = 0;
+        window.addEventListener('keydown', (e) => {
+          if (!galaxyStarted) return;
+          if (e.code === 'Space' || e.key === ' ') {
+            const now = performance.now();
+            if (now - lastSpacePress < 400) {
+              triggerFlowerInHands();
+              lastSpacePress = 0;
+            } else {
+              lastSpacePress = now;
+            }
+          }
+        });
+
+        // Clic derecho en espacio vacío en PC
+        window.addEventListener('contextmenu', (e) => {
+          if (!galaxyStarted) return;
+          if (e.target.closest('#interactive-modal') || e.target.closest('#ios-music-widget') || e.target.closest('#intro-overlay') || e.target.closest('.pill')) return;
+          e.preventDefault();
+          triggerFlowerInHands();
+        });
+
+        // 4. Easter Egg: Estrellas y ondas al tocar el fondo
+        function triggerSpaceRipple(x, y) {
+          const ripple = document.createElement('div');
+          ripple.className = 'space-ripple';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          document.body.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 650);
+
+          for (let i = 0; i < 5; i++) {
+            const spark = document.createElement('div');
+            spark.className = 'space-sparkle';
+            const angle = Math.random() * Math.PI * 2;
+            const dist = Math.random() * 26 + 8;
+            spark.style.setProperty('--dx', (Math.cos(angle) * dist) + 'px');
+            spark.style.setProperty('--dy', (Math.sin(angle) * dist + 16) + 'px');
+            spark.style.left = x + 'px';
+            spark.style.top = y + 'px';
+            document.body.appendChild(spark);
+            setTimeout(() => spark.remove(), 700);
+          }
+        }
+
+        // 3D Raycasting para interacción con frases, flores y sol en la galaxia
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
         let pointerDownX = 0;
@@ -2091,7 +2612,7 @@
           if (distDrag > 10) return;
 
           // Ignorar si se hizo clic en controles UI
-          if (e.target.closest('#interactive-modal') || e.target.closest('#ios-music-widget') || e.target.closest('#intro-overlay')) {
+          if (e.target.closest('#interactive-modal') || e.target.closest('#ios-music-widget') || e.target.closest('#intro-overlay') || e.target.closest('.pill')) {
             return;
           }
 
@@ -2111,8 +2632,20 @@
                 const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
                 showModal(randomPhrase);
                 spawnFlowers(e.clientX, e.clientY, 18);
+              } else if (hit.userData.type === 'sun') {
+                const now = performance.now();
+                sunClicks.push(now);
+                sunClicks = sunClicks.filter(t => now - t <= 2000);
+                triggerSpaceRipple(e.clientX, e.clientY);
+                if (sunClicks.length >= 5) {
+                  sunClicks = [];
+                  triggerEsquimalExplosion();
+                }
               }
             }
+          } else {
+            // Easter Egg: Clic en espacio vacío genera onda luminosa y chispas
+            triggerSpaceRipple(e.clientX, e.clientY);
           }
         });
 
