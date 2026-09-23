@@ -14,6 +14,10 @@
   <style>
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     body.flower-cursor,
@@ -28,6 +32,8 @@
       background: #000000;
       overflow: hidden;
       font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     #galaxy-canvas {
@@ -78,17 +84,20 @@
 
     @media (max-width: 768px) {
       .pill {
-        top: 18px;
+        top: 16px;
         font-size: 13.5px;
-        padding: 8px 16px;
-        max-width: calc(100vw - 115px);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        padding: 9px 18px;
+        max-width: min(88vw, 360px);
+        width: max-content;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.35;
+        border-radius: 18px;
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.6), 0 6px 20px rgba(0, 0, 0, 0.5);
       }
 
       .ios-music-widget {
-        top: 14px;
+        top: 68px;
         right: 14px;
       }
 
@@ -119,13 +128,15 @@
     /* ====== FLOATING IOS-STYLE MUSIC CONTROLLER ====== */
     .ios-music-widget {
       position: fixed;
-      top: 20px;
+      top: 60px;
       right: 20px;
       z-index: 100;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.5s ease;
       font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .ios-music-widget.visible {
@@ -145,22 +156,19 @@
       align-items: center;
       justify-content: center;
       gap: 5px;
-      cursor: pointer;
+      cursor: grab;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), 0 0 16px rgba(255, 215, 0, 0.35);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease, border-color 0.25s ease;
       position: relative;
-    }
-
-    .music-bubble-btn:hover {
-      transform: scale(1.08);
-      border-color: #ffe066;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.85), 0 0 24px rgba(255, 215, 0, 0.6);
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .music-bubble-btn:active {
-      transform: scale(0.94);
+      cursor: grabbing;
     }
 
     .music-bubble-icon {
@@ -945,6 +953,7 @@
       font-size: 16.5px;
       font-weight: 800;
       border: 1.5px solid #fff9b0;
+      outline: none;
       padding: 15px 22px;
       border-radius: 999px;
       cursor: pointer;
@@ -956,6 +965,8 @@
       transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease, filter 0.25s ease;
       position: relative;
       overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .door-button::before {
@@ -1123,6 +1134,10 @@
       cursor: pointer;
     }
 
+    .pill.flip-return {
+      animation: pillSecretFlipReturn 0.85s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
     @keyframes pillSecretFlip {
       0% {
         transform: translateX(-50%) translateY(0) rotateX(0deg) scale(1);
@@ -1134,6 +1149,24 @@
 
       100% {
         transform: translateX(-50%) translateY(0) rotateX(360deg) scale(1);
+      }
+    }
+
+    @keyframes pillSecretFlipReturn {
+      0% {
+        transform: translateX(-50%) translateY(0) rotateX(0deg) scale(1);
+        background: linear-gradient(135deg, #fff275 0%, #ffd700 50%, #ff9e00 100%);
+        box-shadow: 0 0 50px rgba(255, 215, 0, 0.95), 0 0 85px rgba(255, 235, 120, 0.7);
+        border-color: #ffffff;
+        color: #1a1000;
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(-12px) rotateX(-180deg) scale(1.1);
+      }
+
+      100% {
+        transform: translateX(-50%) translateY(0) rotateX(-360deg) scale(1);
       }
     }
 
@@ -2222,8 +2255,89 @@
           }
         }
 
+        // ====== DRAGGABLE FLOATING MUSIC CONTROLLER ======
+        let isDraggingMusic = false;
+        let hasDraggedMusic = false;
+        let dragStartX = 0, dragStartY = 0;
+        let initialWidgetLeft = 0, initialWidgetTop = 0;
+
         if (musicBubbleBtn && iosMusicWidget) {
+          function onMusicPointerDown(e) {
+            if (e.target.closest('#music-popover-menu')) return;
+            isDraggingMusic = true;
+            hasDraggedMusic = false;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+
+            const rect = iosMusicWidget.getBoundingClientRect();
+            initialWidgetLeft = rect.left;
+            initialWidgetTop = rect.top;
+
+            iosMusicWidget.style.right = 'auto';
+            iosMusicWidget.style.bottom = 'auto';
+            iosMusicWidget.style.left = initialWidgetLeft + 'px';
+            iosMusicWidget.style.top = initialWidgetTop + 'px';
+
+            window.addEventListener('pointermove', onMusicPointerMove, { passive: false });
+            window.addEventListener('pointerup', onMusicPointerUp);
+            window.addEventListener('pointercancel', onMusicPointerUp);
+          }
+
+          function onMusicPointerMove(e) {
+            if (!isDraggingMusic) return;
+            const dx = e.clientX - dragStartX;
+            const dy = e.clientY - dragStartY;
+
+            if (Math.hypot(dx, dy) > 5) {
+              hasDraggedMusic = true;
+              if (e.cancelable) e.preventDefault();
+            }
+
+            if (hasDraggedMusic) {
+              const btnSize = musicBubbleBtn.offsetWidth || 44;
+              let newLeft = initialWidgetLeft + dx;
+              let newTop = initialWidgetTop + dy;
+
+              // Límites de la pantalla (con margen de 8px)
+              newLeft = Math.max(8, Math.min(window.innerWidth - btnSize - 8, newLeft));
+              newTop = Math.max(8, Math.min(window.innerHeight - btnSize - 8, newTop));
+
+              iosMusicWidget.style.left = newLeft + 'px';
+              iosMusicWidget.style.top = newTop + 'px';
+
+              // Orientar el menú popover según el lado de la pantalla
+              const popover = document.getElementById('music-popover-menu');
+              if (popover) {
+                if (newLeft < 140) {
+                  popover.style.left = '0';
+                  popover.style.right = 'auto';
+                  popover.style.transformOrigin = 'top left';
+                } else {
+                  popover.style.left = 'auto';
+                  popover.style.right = '0';
+                  popover.style.transformOrigin = 'top right';
+                }
+              }
+            }
+          }
+
+          function onMusicPointerUp() {
+            if (!isDraggingMusic) return;
+            isDraggingMusic = false;
+            window.removeEventListener('pointermove', onMusicPointerMove);
+            window.removeEventListener('pointerup', onMusicPointerUp);
+            window.removeEventListener('pointercancel', onMusicPointerUp);
+          }
+
+          musicBubbleBtn.addEventListener('pointerdown', onMusicPointerDown);
+
           musicBubbleBtn.addEventListener('click', (e) => {
+            if (hasDraggedMusic) {
+              e.stopPropagation();
+              e.preventDefault();
+              hasDraggedMusic = false;
+              return;
+            }
             e.stopPropagation();
             iosMusicWidget.classList.add('open');
             updateMusicUI();
@@ -2432,6 +2546,7 @@
         const galaxyPill = document.getElementById('galaxy-pill');
         let pillClicks = [];
         let pillTimeout = null;
+        let pillReturnTimeout = null;
         const defaultPillText = 'Feliz Día de las Flores Amarillas, mi amor 🌻';
 
         if (galaxyPill) {
@@ -2443,15 +2558,27 @@
 
             if (pillClicks.length >= 3) {
               pillClicks = [];
-              galaxyPill.classList.remove('flip-secret');
+              clearTimeout(pillTimeout);
+              clearTimeout(pillReturnTimeout);
+
+              galaxyPill.classList.remove('flip-secret', 'flip-return');
               void galaxyPill.offsetWidth; // Reflow para reiniciar la animación
               galaxyPill.classList.add('flip-secret');
               galaxyPill.textContent = 'no me hinques la nariz o te hago cosquillas👻';
 
-              clearTimeout(pillTimeout);
               pillTimeout = setTimeout(() => {
                 galaxyPill.classList.remove('flip-secret');
-                galaxyPill.textContent = defaultPillText;
+                void galaxyPill.offsetWidth;
+                galaxyPill.classList.add('flip-return');
+
+                // Cambiar el texto a la mitad del giro 3D inverso (180deg)
+                pillReturnTimeout = setTimeout(() => {
+                  galaxyPill.textContent = defaultPillText;
+                }, 380);
+
+                setTimeout(() => {
+                  galaxyPill.classList.remove('flip-return');
+                }, 850);
               }, 4000);
             }
           });
